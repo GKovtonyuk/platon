@@ -1,4 +1,4 @@
-const descriptions = {
+window.descriptions = {
   Tetrahedron: {
     title: 'Тетраедр',
     faces: 4,
@@ -36,7 +36,7 @@ const descriptions = {
   }
 };
 
-function createGeometry(type) {
+window.createGeometry = function(type) {
   switch (type) {
     case "Tetrahedron": return new THREE.TetrahedronGeometry(1);
     case "Cube": return new THREE.BoxGeometry(1,1,1);
@@ -44,4 +44,4 @@ function createGeometry(type) {
     case "Dodecahedron": return new THREE.DodecahedronGeometry(1);
     case "Icosahedron": return new THREE.IcosahedronGeometry(1);
   }
-}
+};
