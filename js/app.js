@@ -14,7 +14,7 @@ function init() {
     1000
   );
 
-  camera.position.z = isMobile() ? 4 : 3;
+  camera.position.z = window.isMobile ? 4 : 3;
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -27,7 +27,10 @@ function init() {
   light.position.set(10,10,10);
   scene.add(light);
 
-  setupUI(setSolid);
+  // ⚠️ важливо: перевірка існування
+  if (window.setupUI) {
+    window.setupUI(setSolid);
+  }
 
   setSolid("Tetrahedron");
 
@@ -37,17 +40,19 @@ function init() {
 function setSolid(type) {
   if (mesh) scene.remove(mesh);
 
-  const geometry = createGeometry(type);
+  const geometry = window.createGeometry(type);
   const material = new THREE.MeshNormalMaterial({ flatShading: true });
 
   mesh = new THREE.Mesh(geometry, material);
 
-  const scale = isMobile() ? 0.8 : 1;
+  const scale = window.isMobile ? 0.8 : 1;
   mesh.scale.set(scale, scale, scale);
 
   scene.add(mesh);
 
-  updateDescription(type);
+  if (window.updateDescription) {
+    window.updateDescription(type);
+  }
 }
 
 function onResize() {
@@ -56,14 +61,14 @@ function onResize() {
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  camera.position.z = isMobile() ? 4 : 3;
+  camera.position.z = window.isMobile ? 4 : 3;
 }
 
 function animate() {
   requestAnimationFrame(animate);
 
   if (mesh) {
-    mesh.rotation.y += isMobile() ? 0.015 : 0.01;
+    mesh.rotation.y += window.isMobile ? 0.015 : 0.01;
   }
 
   controls.update();
