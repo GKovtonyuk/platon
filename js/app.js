@@ -47,8 +47,7 @@ function setSolid(type) {
 
   scene.add(mesh);
 
-  document.getElementById("description").innerText =
-    descriptions[type];
+  updateDescription(type);
 }
 
 function onResize() {
