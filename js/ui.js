@@ -7,7 +7,7 @@ function setupUI(setSolid) {
 }
 
 function updateDescription(type) {
-  const d = descriptions[type];
+  const d = window.descriptions[type];
 
   document.getElementById("description").innerHTML = `
     <div class="info-card">
