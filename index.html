@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Platonic Solids Lab</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Платонові тіла</title>
+
+  <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-    <div id="ui">
-        <h2>🧊 Platonic Solids Lab</h2>
-        <div id="buttons"></div>
-        <div id="info"></div>
-    </div>
-    
-    <div id="canvas-container"></div> 
 
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="js/descriptions.js"></script>
-    <script src="js/solids.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
+  <div id="ui">
+    <h3>Платонові тіла</h3>
+
+    <button data-type="Tetrahedron">Тетраедр</button>
+    <button data-type="Cube">Куб</button>
+    <button data-type="Octahedron">Октаедр</button>
+    <button data-type="Dodecahedron">Додекаедр</button>
+    <button data-type="Icosahedron">Ікосаедр</button>
+
+    <p id="description"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+
+  <script src="js/utils.js"></script>
+  <script src="js/solids.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+
 </body>
-</html>>
+</html>
