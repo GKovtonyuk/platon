@@ -1,59 +1,38 @@
 body {
   margin: 0;
+  font-family: sans-serif;
   background: #111;
-  color: white;
-  font-family: Arial;
-
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
+  color: #fff;
 }
 
-/* UI */
-#ui {
-  width: 280px;
-  padding: 15px;
-  margin: 10px;
-  background: rgba(0,0,0,0.85);
-  border-radius: 10px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-button {
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* опис */
-.info-card {
-  margin-top: 10px;
-  padding: 10px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 8px;
-}
-
-.info-card h2 {
-  margin: 0 0 5px 0;
-}
-
-/* canvas */
 canvas {
-  flex: 1;
   display: block;
 }
 
-/* 📱 MOBILE */
-@media (max-width: 768px) {
-  body {
-    flex-direction: column;
-  }
+#menu {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.7);
+  padding: 15px;
+  border-radius: 10px;
+  z-index: 1;
+  max-width: 300px;
+}
 
-  #ui {
-    width: calc(100% - 20px);
-  }
+select {
+  font-size: 16px;
+  padding: 5px;
+  background: #222;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  margin-top: 5px;
+  width: 100%;
+}
+
+#description {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.4em;
 }
