@@ -6,10 +6,13 @@ const descriptions = {
   Icosahedron: "🔷 Ікосаедр — 20 трикутних граней, складна симетрія."
 };
 
-// сцена
+// Використовуємо контейнер для 3D
+const container = document.getElementById('canvas-container');
+
+// Сцена
 const scene = new THREE.Scene();
 
-// камера
+// Камера
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
@@ -18,22 +21,22 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 3;
 
-// renderer
+// Renderer (малюємо в контейнер)
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+container.appendChild(renderer.domElement); 
 
-// controls
+// Controls
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-// світло
+// Світло
 const light = new THREE.PointLight(0xffffff, 1);
 light.position.set(10, 10, 10);
 scene.add(light);
 
 let mesh;
 
-// геометрії
+// Створення фігури
 function createGeometry(type) {
   switch (type) {
     case "Tetrahedron": return new THREE.TetrahedronGeometry(1);
@@ -44,9 +47,7 @@ function createGeometry(type) {
   }
 }
 
-// створення фігури
 function setSolid(type) {
-
   if (mesh) scene.remove(mesh);
 
   const geometry = createGeometry(type);
@@ -55,10 +56,12 @@ function setSolid(type) {
   mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 
-  document.getElementById("description").innerText = descriptions[type];
+  // Оновлюємо опис
+  const descEl = document.getElementById("description");
+  if (descEl) descEl.innerText = descriptions[type];
 
-  // активна кнопка
-  document.querySelectorAll("button").forEach(btn => {
+  // Активна кнопка
+  document.querySelectorAll("button[data-type]").forEach(btn => {
     btn.classList.remove("active");
     if (btn.dataset.type === type) {
       btn.classList.add("active");
@@ -66,17 +69,30 @@ function setSolid(type) {
   });
 }
 
-// кнопки
+// Обробка кліків на кнопки
 document.querySelectorAll("button").forEach(btn => {
   btn.addEventListener("click", () => {
-    setSolid(btn.dataset.type);
+    // Якщо у кнопки є data-type, змінюємо фігуру
+    if (btn.dataset.type) {
+      setSolid(btn.dataset.type);
+    }
   });
 });
 
-// старт
+// Логіка згортання меню
+const menuToggle = document.getElementById('menuToggle');
+if (menuToggle) {
+  menuToggle.addEventListener('click', () => {
+    document.querySelectorAll('#buttons button:not(#menuToggle)').forEach(btn => {
+      btn.classList.toggle('hidden');
+    });
+  });
+}
+
+// Старт
 setSolid("Tetrahedron");
 
-// анімація
+// Анімація
 function animate() {
   requestAnimationFrame(animate);
   if (mesh) mesh.rotation.y += 0.01;
@@ -84,9 +100,11 @@ function animate() {
 }
 animate();
 
-// resize
+// Resize
 window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(width, height);
 });
