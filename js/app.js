@@ -1,23 +1,12 @@
 const descriptions = {
-  Tetrahedron: `
-🔺 Тетраедр — 4 трикутні грані. Найпростіше платонове тіло.
-Молекула метану має таку форму.
-  `,
-  Cube: `
-🟦 Куб — 6 квадратних граней, 8 вершин, 12 ребер.
-  `,
-  Octahedron: `
-🔶 Октаедр — 8 трикутних граней, дві піраміди основами.
-  `,
-  Dodecahedron: `
-⬟ Додекаедр — 12 п’ятикутних граней.
-  `,
-  Icosahedron: `
-🔷 Ікосаедр — 20 трикутних граней, складна симетрія.
-  `
+  Tetrahedron: "🔺 Тетраедр — 4 трикутні грані, найпростіше платонове тіло.",
+  Cube: "🟦 Куб — 6 квадратних граней, класична 3D форма.",
+  Octahedron: "🔶 Октаедр — 8 трикутних граней, дві піраміди.",
+  Dodecahedron: "⬟ Додекаедр — 12 п’ятикутних граней.",
+  Icosahedron: "🔷 Ікосаедр — 20 трикутних граней, складна симетрія."
 };
 
-// --- сцена ---
+// сцена
 const scene = new THREE.Scene();
 
 // камера
@@ -44,19 +33,20 @@ scene.add(light);
 
 let mesh;
 
-// --- створення геометрії ---
+// геометрії
 function createGeometry(type) {
   switch (type) {
-    case 'Tetrahedron': return new THREE.TetrahedronGeometry(1);
-    case 'Cube': return new THREE.BoxGeometry(1, 1, 1);
-    case 'Octahedron': return new THREE.OctahedronGeometry(1);
-    case 'Dodecahedron': return new THREE.DodecahedronGeometry(1);
-    case 'Icosahedron': return new THREE.IcosahedronGeometry(1);
+    case "Tetrahedron": return new THREE.TetrahedronGeometry(1);
+    case "Cube": return new THREE.BoxGeometry(1, 1, 1);
+    case "Octahedron": return new THREE.OctahedronGeometry(1);
+    case "Dodecahedron": return new THREE.DodecahedronGeometry(1);
+    case "Icosahedron": return new THREE.IcosahedronGeometry(1);
   }
 }
 
-// --- додати фігуру ---
-function addMesh(type) {
+// створення фігури
+function setSolid(type) {
+
   if (mesh) scene.remove(mesh);
 
   const geometry = createGeometry(type);
@@ -66,17 +56,27 @@ function addMesh(type) {
   scene.add(mesh);
 
   document.getElementById("description").innerText = descriptions[type];
+
+  // активна кнопка
+  document.querySelectorAll("button").forEach(btn => {
+    btn.classList.remove("active");
+    if (btn.dataset.type === type) {
+      btn.classList.add("active");
+    }
+  });
 }
 
-// --- select ---
-document.getElementById("solid").addEventListener("change", (e) => {
-  addMesh(e.target.value);
+// кнопки
+document.querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    setSolid(btn.dataset.type);
+  });
 });
 
-// стартова фігура
-addMesh("Tetrahedron");
+// старт
+setSolid("Tetrahedron");
 
-// --- анімація ---
+// анімація
 function animate() {
   requestAnimationFrame(animate);
   if (mesh) mesh.rotation.y += 0.01;
@@ -84,7 +84,7 @@ function animate() {
 }
 animate();
 
-// --- resize ---
+// resize
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
