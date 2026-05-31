@@ -75,11 +75,18 @@ document.querySelectorAll("button").forEach(btn => {
     // Якщо у кнопки є data-type, змінюємо фігуру
     if (btn.dataset.type) {
       setSolid(btn.dataset.type);
+      
+      // АВТОМАТИЧНЕ ЗГОРТАННЯ після вибору на мобільному
+      if (window.innerWidth <= 600) {
+        document.querySelectorAll('#buttons button:not(#menuToggle)').forEach(b => {
+          b.classList.add('hidden');
+        });
+      }
     }
   });
 });
 
-// Логіка згортання меню
+// Логіка згортання меню кнопкою "Меню"
 const menuToggle = document.getElementById('menuToggle');
 if (menuToggle) {
   menuToggle.addEventListener('click', () => {
@@ -108,3 +115,10 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
   renderer.setSize(width, height);
 });
+
+// ПОЧАТКОВЕ ЗГОРТАННЯ при завантаженні сторінки (для мобільних)
+if (window.innerWidth <= 600) {
+  document.querySelectorAll('#buttons button:not(#menuToggle)').forEach(btn => {
+    btn.classList.add('hidden');
+  });
+}
